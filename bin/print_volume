@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# Script to manage pactl easily with keyboard shorcuts and to use its output in bars
+# or programs that read scripts output
+
+
+sinks=()
+volumes=()
+states=()
+for sk in $(pactl list short sinks | cut -d\n -f1- | cut -f1); do
+        sinks+=($sk)
+done
+for vol in $(pactl list sinks |grep "Volume: front-left" | tr -s ' ' | cut -d' ' -f5); do
+        volumes+=($vol)
+done
+for state in $(pactl list short sinks | cut -d\n -f1- | cut -f5); do
+        states+=($state)
+done
+output=(" Vol: ")
+for j in ${!volumes[@]}; do
+        if [[ ${states[$j]} == "RUNNING" ]]
+        then
+                output+="[${volumes[$j]}] "
+        else
+                output+="${volumes[$j]} "
+        fi
+done
+if [ "$1" == '-v' ]
+then
+        echo ${output[@]}
+else
+        if [ "$1" == '-n' ] 
+        then
+                for s in ${!states[@]}; do
+                        if [ "${states[$s]}" == "RUNNING" ]
+                        then
+                                running=$s
+                        fi
+                done
+                for st in $(pactl list short sink-inputs | cut -d\n -f1- | cut -f1); do
+                        pactl move-sink-input $st ${sinks[($running + 1) % ${#sinks[@]}]}
+                done
+                pactl set-default-sink ${sinks[($running + 1) % ${#sinks[@]}]}
+        else
+                echo "Usage: print_volume [OPTION]"
+                echo "-v        Print volume of all sinks, adds a wildcard to running sinks"
+                echo "-n        Switch streams to the next sink"
+                echo "--help    Shows this help"
+        fi
+fi
+
+

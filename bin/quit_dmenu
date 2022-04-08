@@ -1,0 +1,17 @@
+#!/bin/bash
+
+option=$(echo -e "suspend\nshutdown\nreboot" |dmenu)
+
+case $option in
+        "suspend") 
+                loginctl suspend
+                ;;
+        "shutdown") 
+                loginctl poweroff
+                ;;
+        "reboot") 
+                loginctl reboot
+                ;;
+        *) 
+                ;;
+esac

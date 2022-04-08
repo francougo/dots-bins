@@ -1,0 +1,184 @@
+(defwidget workspaces []
+  (box :class "container"
+    :orientation "h"
+    :space-evenly false
+    :halign "center"
+    (box :class { ws1 }
+        :orientation "h"
+      1)
+    (box :class { ws2 }
+        :orientation "h"
+      2)
+    (box :class { ws3 }
+        :orientation "h"
+      3)
+    (box :class { ws4 }
+        :orientation "h"
+      4)
+    (box :class { ws5 }
+        :orientation "h"
+      5)
+    (box :class { ws6 }
+        :orientation "h"
+      6)
+    (box :class { ws7 }
+        :orientation "h"
+      7)
+    (box :class { ws8 }
+        :orientation "h"
+      8)
+    (box :class { ws9 }
+      :orientation "h"
+      9))
+)
+
+(defwidget clock_w []
+  (box :orientation "h"
+    :class "container"
+    (box :orientation "h"
+      :class "clock"
+      time)
+    (box :orientation "h"
+      :class "date"
+      date)))
+
+(defwidget vol_w []
+  (box :orientation "h"
+    :class "volume"
+    " ${vol}"))
+
+(defwidget titl_w []
+  (box :orientation "h"
+    :halign "fill"
+    :class "title"
+    " ${titl}"))
+
+(defwidget pom_w []
+  (box :orientation "h"
+    :halign "fill"
+    :class "pom"
+    " ${pom}"))
+
+(defwidget bat_w []
+  (box :orientation "h"
+    :halign "fill"
+    :class "volume"
+    (circular-progress :value batt
+      :class "batt_prog"
+      :start-angle "15" 
+      :thickness 4)
+    ))
+
+(defpoll batt :interval "3s"
+  `batt -p`)
+(deflisten pom
+  `pomodoro_daemon'`)
+
+(deflisten music :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+
+(defpoll vol :interval "1s"
+  `pactl get-sink-volume @DEFAULT_SINK@ |awk 'NR==1{print $5}'|sed 's/.$//'`)
+
+(deflisten curr_dt 
+  `current_ws`)
+
+(deflisten titl
+  `foc_window`)
+
+(deflisten ws1
+  `occ_dts 0`)
+(deflisten ws2
+  `occ_dts 1`)
+(deflisten ws3
+  `occ_dts 2`)
+(deflisten ws4
+  `occ_dts 3`)
+(deflisten ws5
+  `occ_dts 4`)
+(deflisten ws6
+  `occ_dts 5`)
+(deflisten ws7
+  `occ_dts 6`)
+(deflisten ws8
+  `occ_dts 7`)
+(deflisten ws9
+  `occ_dts 8`)
+
+(defpoll time :interval "10s"
+  `date '+%H:%M'`)
+(defpoll date :interval "120s"
+  `date '+%b %d'`)
+
+(defwindow clock
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+              :y "5px"
+              :width "9%"
+              :height "25px"
+              :anchor "top center")
+  :reserve (struts :side "top" :distance "35px")
+  :wm-ignore false
+  (clock_w))
+
+(defwindow desk
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "5px"
+              :y "6px"
+              :width "1%"
+              :height "25px"
+              :anchor "top left")
+  :reserve (struts :side "top" :distance "20px")
+  :wm-ignore false
+  (workspaces))
+
+(defwindow volume
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "8%"
+              :y "8px"
+              :width "4%"
+              :height "30px"
+              :anchor "top center")
+  :reserve (struts :side "top" :distance "35px")
+  :wm-ignore false
+  (vol_w))
+
+(defwindow title
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "20%"
+              :y "7px"
+              :width "20%"
+              :height "30px"
+              :anchor "top left")
+  :reserve (struts :side "top" :distance "35px")
+  :wm-ignore false
+  (titl_w))
+
+(defwindow pom
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "-10%"
+              :y "7px"
+              :width "5%"
+              :height "30px"
+              :anchor "top center")
+  :reserve (struts :side "top" :distance "35px")
+  :wm-ignore false
+  (pom_w))
+
+(defwindow battery
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "170px"
+              :y "8px"
+              :width "4%"
+              :height "30px"
+              :anchor "top center")
+  :reserve (struts :side "top" :distance "35px")
+  :wm-ignore false
+  (bat_w))
+

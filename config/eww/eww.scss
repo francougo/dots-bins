@@ -1,0 +1,129 @@
+$bg_sel:    #fcd7ad;
+$bg_normal: #403d39;
+$bg_empty:  #403d39;
+$fg_sel:    #252422;
+$fg_normal: #fcd7ad;
+$fg_empty:  #a57548;
+$misc1:     #a57548;
+$misc2:     #eee5e9;
+$warning1:  #e8d125;
+$warning2:  #f7461e;
+
+* {
+        all: unset;
+}
+
+.background {
+        background-image:linear-gradient(to right, $bg_sel 0%, $bg_normal 80%);
+}
+
+.clock {
+        font-family:Ubuntu;
+        font-size:24;
+        color:$fg_sel;
+        background-color:$misc1;
+        padding:2px 2px 2px 2px;
+}
+
+.date {
+        font-family:Ubuntu;
+        font-size:15;
+        color:$fg_sel;
+        background-color:$bg_sel;
+        font-style:italic;
+}
+
+.stat, .bat1, .bat2, .bat3, .bat4, .bat5, .wifi1, .bt1 {
+        font-family:'Font Awesome 5 Free';
+        font-size:15;
+        background-color: transparent;
+        color:$fg_normal;
+        border-width:2px;
+        margin: 4px;
+        padding: 1px 4px 1px 4px;
+}
+
+.bat4 {
+        color:$warning1;
+}
+
+.bat5 {
+        background-color:$warning2;
+}
+.bat1, .bat2, .bat3, .bat4, .bat5, .stat{
+        color:$fg_sel;
+}
+
+
+.title {
+        font-family:Ubuntu;
+        font-size:12;
+        background-color:$bg_normal;
+        color:$fg_normal;
+        border-width:2px;
+        padding:2px 2px 2px 2px;
+}
+
+.11 {
+        // focused and occupied
+        background-color: $bg_sel;
+        color:$fg_sel;
+        font-family:Monaco;
+        font-size:18px;
+        padding:3px 7px 3px 7px;
+        border-style:solid;
+        border-width:2px;
+        border-color:$misc1;
+        font-style:italic;
+        font-weight:bold;
+        
+}
+
+.10 {
+        // unfocused and occupied
+        background-color: $bg_normal;
+        color:$fg_normal;
+        font-family:Monaco;
+        font-size:18px;
+        padding:3px 7px 3px 7px;
+        font-style:italic;
+        border-style:solid;
+        border-width:2px;
+        border-color:$bg_normal;
+
+}
+
+.01 {
+        // focused and unoccupied
+        background-color: $bg_sel;
+        color:$fg_sel;
+        font-family:Monaco;
+        font-size:18px;
+        padding:3px 7px 3px 7px;
+        border-style:solid;
+        border-width:2px;
+        border-color:$misc1;
+        font-weight:bold;
+        font-style:italic;
+}
+
+.00 {
+        // unfocused and unoccupied
+        background-color: $bg_empty;
+        color:$fg_empty;
+        font-family:Monaco;
+        font-size:18px;
+        padding:3px 7px 3px 7px;
+        font-style:italic;
+        border-style:solid;
+        border-width:2px;
+        border-color:$bg_empty;
+
+}
+
+.batt_prog {
+        margin:3px;
+        color:$bg_sel;
+        background-color:$fg_sel;
+        border-radius:10px;
+}

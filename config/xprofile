@@ -1,0 +1,8 @@
+light-locker &
+xrdb ~/.Xresources &
+export _JAVA_AWT_WM_NONREPARENTING=1
+~/.fehbg &
+export PATH=/home/franco/.cargo/bin:~/bin:$PATH
+eww daemon &
+eww open barra &
+wmname LG3D &
