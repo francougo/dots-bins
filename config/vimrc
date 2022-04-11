@@ -4,6 +4,9 @@ Plug 'elkowar/yuck.vim'
 
 call plug#end()
 
+filetype plugin on
+filetype indent on
+
 command! -nargs=1 Wro w !sudo tee <args> 
 "write to <args> file when on read only mode (:Wro foo.txt :Wro %)
 
@@ -59,13 +62,13 @@ nnoremap <leader>u viw~
 
 noremap <leader>w <c-w><c-w>
 
-nnoremap <leader>lc :! pdflatex --jobname=texaux %<cr>
+nnoremap <leader>lc :! auxtex %<cr><cr>
 "compile latex file to view it
 
 nnoremap <leader>lw :! pdflatex %<cr>
 "compile latex file with its source name
 
-nnoremap <leader>lv :! zathura texaux.pdf & disown<cr>
+nnoremap <leader>lv :! zathura /tmp/auxpdf.pdf & disown<cr>
 "opens the compiled pdf latex file in zathura
 
 nnoremap <leader>b :bnext<cr>
