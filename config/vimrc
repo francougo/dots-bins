@@ -14,6 +14,7 @@ syntax on
 
 set background=dark
 set tabstop=4
+set shiftwidth=4
 set softtabstop=4
 set expandtab
 colorscheme koehler
@@ -32,16 +33,6 @@ set wildmenu
 set showmatch
 
 set incsearch
-
-set hidden
-"Para cambiar de buffer sin escribir cambios
-
-inoremap kj <C-C> 
-
-vnoremap kj <C-C>
-
-cnoremap kj <C-C>
-"makes escape more comfortable
 
 let mapleader = ","
 
