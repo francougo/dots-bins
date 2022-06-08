@@ -1,0 +1,51 @@
+#!/bin/bash
+
+getNotebook(){
+        (echo "New notebook"; ls $notebook_dir) | rofi -dmenu -p "Notebook" -format "i s"
+}
+
+notebook_dir="${HOME}/.local/share/taskman/"
+loop=1
+
+if [[ ! -d $notebook_dir ]]; then
+        mkdir -p $notebook_dir
+        echo created notebook directory
+fi
+
+while [[ $loop == 1 ]];do
+        nb=$(getNotebook)
+        
+        # Exit loop if no notebook or option selected
+        if [[ $nb == "" ]];then
+                loop=0
+        fi
+        
+        nb_name=$(echo $nb | cut -d' ' -f2)
+        nb_ind=$(echo $nb | cut -d' ' -f1)
+        
+        if [[ $nb_ind == 0 ]]; then
+                touch "${notebook_dir}$(rofi -dmenu -p "Notebook name")"
+        else
+                file="${notebook_dir}${nb_name}"
+                if [[ -f $file ]]; then
+
+                        task=$( (echo "ADD TASK"; cat $file) | rofi -dmenu -p "Search task" -sep '\n' -format "i s")
+                        task_id=$(echo $task | cut -d' ' -f1)
+                        task=$(echo $task | cut -d' ' -f2-)
+
+                        if [[ $task_id == 0 ]]; then
+                                (echo "$(rofi -dmenu -p "New task")"; cat $file) > "/tmp/taskman_aux_nb"
+                                cat "/tmp/taskman_aux_nb" > $file
+                        else
+                                if [[ $task_id != -1 && $task != "" ]]; then
+                                        opt=$(echo "Completed" | rofi -dmenu -p "Mark complete? " -format "i" -mesg "\"${task}\"")
+                                        if [[ $opt == 0 ]];then
+                                                sed -i "${task_id}d" $file
+                                        fi
+                                fi
+                        fi
+                fi
+        fi
+done
+
+
