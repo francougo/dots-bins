@@ -70,6 +70,9 @@
 (defpoll bat_s :interval "3s"
   `acpi --battery|awk '{print $5}'`)
 
+(defpoll bt_s :interval "5s"
+  `bt_info`)
+
 (deflisten pom
   `pomodoro_daemon'`)
 
@@ -120,6 +123,8 @@
 (defpoll date :interval "120s"
   `date '+%b %d'`)
   
+(defpoll bright :interval "5s"
+    `bright_ctl`)
 
 (defwindow clock
   :monitor 0
@@ -197,8 +202,8 @@
   :monitor 0
   :windowtype "dock"
   :geometry (geometry :x "0px"
-              :y "5px"
-              :width "95%"
+              :y "0px"
+              :width "100%"
               :height "25px"
               :anchor "top center")
   :reserve (struts :side "top" :distance "30px")
@@ -219,6 +224,7 @@
 
 (defwidget barra_w []
   (centerbox :orientation "h"
+    :class "barra_comp"
     (box :class "izq_barra"
       :halign "start"
       (izq_w))
@@ -236,7 +242,7 @@
       (box :class "izq_barra"
         (vol_w))
       (box :class "izq_barra"
-        (bat_w))))
+        (bat_w)(bright_w))))
 
 (defwidget mid_w []
   (box :class "desk"
@@ -252,7 +258,9 @@
     "${wifi_stgt} dBm "))
 
 (defwidget bt_w []
-  (box :class "bt1"
+  (box :class "bt${bt_s}"
     ""))
 
-
+(defwidget bright_w []
+    (box :class "bright"
+        "${bright}% "))
