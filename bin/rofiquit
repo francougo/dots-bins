@@ -1,0 +1,17 @@
+#!/bin/bash
+
+option=$(echo -e " Suspend\n Shutdown\n Reboot" |rofi -dmenu)
+
+case $(echo $option|awk '{print $2}') in
+        "Suspend") 
+                loginctl suspend
+                ;;
+        "Shutdown") 
+                loginctl poweroff
+                ;;
+        "Reboot") 
+                loginctl reboot
+                ;;
+        *) 
+                ;;
+esac
