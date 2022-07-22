@@ -1,6 +1,6 @@
 #!/bin/bash
 
-option=$(echo -e " Suspend\n Shutdown\n Reboot" |rofi -dmenu)
+option=$(echo -e "Suspend\nShutdown\nReboot" |rofi -dmenu)
 
 case $(echo $option|awk '{print $2}') in
         "Suspend") 

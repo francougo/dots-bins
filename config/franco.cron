@@ -1,0 +1,4 @@
+#Mins Hours Days Months Day of the week
+%daily * 18-23 DISPLAY=:0 /usr/bin/sct 4500
+%daily * 0-6 DISPLAY=:0 /usr/bin/sct 4500
+%daily * 7-17 DISPLAY=:0 /usr/bin/sct 6500
