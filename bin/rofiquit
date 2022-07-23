@@ -1,17 +1,20 @@
 #!/bin/bash
 
-option=$(echo -e "Suspend\nShutdown\nReboot" |rofi -dmenu)
+option=$(echo -e "Suspend\nHibernate\nShutdown\nReboot" |rofi -dmenu)
 
 case $(echo $option|awk '{print $2}') in
-        "Suspend") 
-                loginctl suspend
-                ;;
-        "Shutdown") 
-                loginctl poweroff
-                ;;
-        "Reboot") 
-                loginctl reboot
-                ;;
-        *) 
-                ;;
+    "Suspend") 
+        loginctl suspend
+        ;;
+    "Hibernate")
+        loginctl hibernate
+        ;;
+    "Shutdown") 
+        loginctl poweroff
+        ;;
+    "Reboot") 
+        loginctl reboot
+        ;;
+    *) 
+        ;;
 esac
